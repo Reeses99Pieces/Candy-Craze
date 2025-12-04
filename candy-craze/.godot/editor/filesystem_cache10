@@ -1,6 +1,26 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1764710912
-icon.svg::CompressedTexture2D::4887183601858665972::1763699429::1764711043::1::::<><><>0<>0<>e04d9664fad87582a805ae8dbe459a41<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://::1764819970
+game.tscn::PackedScene::2371023918889009412::1764819943::0::1::::<><><>0<>0<><>::uid://b0t7vs5kxhn7f::::res://nodes/maze.tscn<>uid://cbtynljikvcu3::::res://resources/shaders/crt.gdshader<>uid://d35i21i2wfsf0::::res://scripts/game.gd<>uid://5k51srdukscs::::res://resources/shaders/checkers.gdshader<>uid://cscf5xa6o82f8::::res://assets/fonts/nintendo-nes-font.otf
+icon.svg::CompressedTexture2D::4887183601858665972::1763699429::1764819971::1::::<><><>0<>0<>e04d9664fad87582a805ae8dbe459a41<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 node_2d.tscn::PackedScene::8805425715868815820::1763848969::0::1::::<><><>0<>0<><>::uid://cbvng2cyoojpc::::res://icon.svg
-::res://Assets/::1764710791
+README.md::TextFile::-1::1764819943::0::1::::<><><>0<>0<><>::
+::res://Assets/::1764819943
+::res://Assets/fonts/::1764819943
+nintendo-nes-font.otf::FontFile::6040727676625472383::1764819943::1764819971::1::::<><><>0<>0<>dd501e2f0f4d24fc89092db2102c54d9<>res://.godot/imported/nintendo-nes-font.otf-6e99e8d2f3963248402aed91ad23255d.fontdata::
 ::res://Assets/Npc costumes/::1764710791
+::res://Assets/textures/::1764819943
+light.png::CompressedTexture2D::8324582322343603341::1764819943::1764819971::1::::<><><>0<>0<>022b1d229daa43c2d33d2d18ff099174<>res://.godot/imported/light.png-6dad1d830d247dadc922076cb4c76e3e.ctex::
+programmer art.png::CompressedTexture2D::3054851303606949936::1764819943::1764819971::1::::<><><>0<>0<>dcfc9fbc7f9018352a5f627f362a3279<>res://.godot/imported/programmer art.png-14ec8460946fe05748fb8bd9844fcf44.ctex::
+::res://nodes/::1764819943
+maze.tscn::PackedScene::4182346389661392353::1764819943::0::1::::<><><>0<>0<><>::uid://d8qqognsxfpw::::res://scripts/maze.gd<>uid://sskc65x5yikp::::res://resources/tilesets/tileset.tres
+player.tscn::PackedScene::5903942956936200029::1764819943::0::1::::<><><>0<>0<><>::uid://37ewvnhv1vl5::::res://scripts/player.gd<>uid://cbvng2cyoojpc::::res://icon.svg<>uid://cscf5xa6o82f8::::res://assets/fonts/nintendo-nes-font.otf<>uid://dquqwiy48o2ll::::res://assets/textures/light.png
+::res://resources/::1764819943
+::res://resources/shaders/::1764819943
+checkers.gdshader::Shader::2128177998951515086::1764819943::0::1::::<><><>0<>0<><>::
+crt.gdshader::Shader::4883734403536295508::1764819943::0::1::::<><><>0<>0<><>::
+::res://resources/tilesets/::1764819943
+tileset.tres::TileSet::1301170402227177987::1764819943::0::1::::<><><>0<>0<><>::uid://bjr17ptutaswm::::res://assets/textures/programmer art.png
+::res://scripts/::1764819943
+game.gd::GDScript::9187016337165479539::1764819943::0::1::::<>Node2D<><>0<>0<><>::
+maze.gd::GDScript::279691786596164896::1764819943::0::1::::MazeGen<>TileMap<><>0<>0<><>::
+player.gd::GDScript::2031630988851761192::1764819943::0::1::::<>CharacterBody2D<><>0<>0<><>::
