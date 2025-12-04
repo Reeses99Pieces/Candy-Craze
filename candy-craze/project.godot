@@ -11,8 +11,15 @@ config_version=5
 [application]
 
 config/name="Candy Craze"
+run/main_scene="uid://81sogwyuyc81"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=960
+window/size/resizable=false
 
 [rendering]
 

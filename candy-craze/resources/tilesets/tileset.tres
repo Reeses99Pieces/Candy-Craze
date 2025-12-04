@@ -1,0 +1,21 @@
+[gd_resource type="TileSet" load_steps=4 format=3 uid="uid://sskc65x5yikp"]
+
+[ext_resource type="Texture2D" uid="uid://bjr17ptutaswm" path="res://assets/textures/programmer art.png" id="1_ymr1o"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qp2yk"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_81yw3"]
+texture = ExtResource("1_ymr1o")
+0:0/0 = 0
+0:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_qp2yk")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8, -8, -8)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[resource]
+occlusion_layer_0/light_mask = 1
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_81yw3")
