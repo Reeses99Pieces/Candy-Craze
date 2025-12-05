@@ -46,7 +46,7 @@ func _new_level():
 	current_map = map_scene.instantiate()
 
 	current_map.grid_size = 13 + (level*2)
-	current_map.enemy_count = clamp(1 + level, 1, 4)
+	current_map.max_enemies = clamp(level, 1, 4)
 	current_map.house_count = 4 + floor(level / 2)
 
 	subviewport.add_child(current_map)
