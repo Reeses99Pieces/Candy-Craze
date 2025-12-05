@@ -9,6 +9,7 @@ var player = player_scene.instantiate()
 @onready var menu: Control = $CanvasLayer/Menu
 @onready var subviewport: SubViewport = $CanvasLayer/SubViewport
 @onready var anims: AnimationPlayer = $AnimationPlayer 
+@onready var thunder: AudioStreamPlayer = $Thunder
 
 var current_map = false
 var level = 0
@@ -16,8 +17,10 @@ var houses_left = 0
 
 #rushed last second coding sorry for the mess
 func _on_start_pressed() -> void:
+	subviewport.add_child(player)
 	menu.visible = false
 	loop_thunder()
+	level += 1
 	_new_level()
 	
 func _on_restart_pressed() -> void:
@@ -27,6 +30,7 @@ func _on_restart_pressed() -> void:
 	
 func _on_next_pressed() -> void:
 	next_level.visible = false
+	level += 1
 	_new_level()
 	
 func _on_game_over():
@@ -38,8 +42,6 @@ func _on_house_collected():
 		next_level.visible = true
 
 func _new_level():
-	level += 1
-	
 	if current_map:
 		current_map.queue_free()
 	
@@ -58,12 +60,16 @@ func _new_level():
 			child.connect("collected", _on_house_collected)
 			houses_left += 1
 	
-	subviewport.add_child(player)
 	player.position = current_map.get_spawn_point()
 	player.connect("game_over", _on_game_over)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("reset"):
+		_new_level()
+
 func loop_thunder() -> void:
 	while true:
+		thunder.play()
 		anims.play("thunder")
 		var wait_time := randf_range(8, 10)
 		await get_tree().create_timer(wait_time).timeout

@@ -4,6 +4,7 @@
 [ext_resource type="TileSet" uid="uid://sskc65x5yikp" path="res://resources/tilesets/tileset.tres" id="1_5567m"]
 
 [node name="TileMap" type="TileMap"]
+texture_filter = 3
 tile_set = ExtResource("1_5567m")
 format = 2
 script = ExtResource("1_87f8g")
