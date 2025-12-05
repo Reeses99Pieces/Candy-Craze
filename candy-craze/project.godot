@@ -21,6 +21,11 @@ window/size/viewport_width=1280
 window/size/viewport_height=960
 window/size/resizable=false
 
+[global_group]
+
+Players="The players in the game."
+Houses=""
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

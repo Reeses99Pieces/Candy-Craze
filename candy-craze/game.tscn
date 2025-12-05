@@ -1,10 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://81sogwyuyc81"]
+[gd_scene load_steps=16 format=3 uid="uid://81sogwyuyc81"]
 
-[ext_resource type="PackedScene" uid="uid://b0t7vs5kxhn7f" path="res://nodes/maze.tscn" id="1_80nbo"]
 [ext_resource type="Shader" uid="uid://cbtynljikvcu3" path="res://resources/shaders/crt.gdshader" id="1_feb5d"]
 [ext_resource type="Script" uid="uid://d35i21i2wfsf0" path="res://scripts/game.gd" id="1_ryrav"]
 [ext_resource type="Shader" uid="uid://5k51srdukscs" path="res://resources/shaders/checkers.gdshader" id="2_fc0e3"]
 [ext_resource type="FontFile" uid="uid://cscf5xa6o82f8" path="res://assets/fonts/nintendo-nes-font.otf" id="3_ryrav"]
+[ext_resource type="Texture2D" uid="uid://dquqwiy48o2ll" path="res://assets/textures/light.png" id="6_ryrav"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_feb5d"]
 viewport_path = NodePath("CanvasLayer/SubViewport")
@@ -27,6 +27,14 @@ font_size = 70
 font = ExtResource("3_ryrav")
 font_size = 17
 
+[sub_resource type="LabelSettings" id="LabelSettings_ryrav"]
+font = ExtResource("3_ryrav")
+font_size = 70
+
+[sub_resource type="LabelSettings" id="LabelSettings_eow3j"]
+font = ExtResource("3_ryrav")
+font_size = 17
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7jktm"]
 shader = ExtResource("2_fc0e3")
 shader_parameter/color_a = Color(0.26657492, 0.26657525, 0.2665758, 1)
@@ -35,6 +43,67 @@ shader_parameter/tile_size = 32.0
 shader_parameter/speed = Vector2(0.5, 0)
 shader_parameter/smoothness = 1.0
 shader_parameter/seed = Vector2(0, 0)
+
+[sub_resource type="Animation" id="Animation_ryrav"]
+resource_name = "thunder"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.5, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.01, 10.0, 0.01]
+}
+
+[sub_resource type="Animation" id="Animation_eow3j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eow3j"]
+_data = {
+&"RESET": SubResource("Animation_eow3j"),
+&"thunder": SubResource("Animation_ryrav")
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ryrav")
@@ -73,9 +142,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -235.5
+offset_left = -385.0
 offset_top = -75.0
-offset_right = 235.5
+offset_right = 385.0
 offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -101,6 +170,112 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Play"
 
+[node name="GameOver" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.74509805)
+
+[node name="BoxContainer" type="BoxContainer" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -385.0
+offset_top = -75.0
+offset_right = 385.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOver/BoxContainer"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_ryrav")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/GameOver/BoxContainer"]
+layout_mode = 2
+text = "ALL YOUR CANDY WAS STOLEN!"
+label_settings = SubResource("LabelSettings_eow3j")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/GameOver/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "I AM FUMING!!!"
+
+[node name="NextLevel" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/NextLevel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.74509805)
+
+[node name="BoxContainer" type="BoxContainer" parent="CanvasLayer/NextLevel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -385.0
+offset_top = -75.0
+offset_right = 385.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+vertical = true
+
+[node name="Label" type="Label" parent="CanvasLayer/NextLevel/BoxContainer"]
+layout_mode = 2
+text = "LEVEL COMPLETE"
+label_settings = SubResource("LabelSettings_ryrav")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/NextLevel/BoxContainer"]
+layout_mode = 2
+text = "ALL THAT CANDY'S YOURS, NOW."
+label_settings = SubResource("LabelSettings_eow3j")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="CanvasLayer/NextLevel/BoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "I NEED MORE"
+
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer"]
 size = Vector2i(1280, 960)
 
@@ -120,8 +295,17 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(640, 480)
 
-[node name="TileMap" parent="CanvasLayer/SubViewport" instance=ExtResource("1_80nbo")]
-texture_filter = 1
-allow_loops = true
+[node name="PointLight2D" type="PointLight2D" parent="CanvasLayer/SubViewport"]
+energy = 0.0
+texture = ExtResource("6_ryrav")
+texture_scale = 10.0
 
-[connection signal="pressed" from="CanvasLayer/Menu/BoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../CanvasLayer/SubViewport/PointLight2D")
+libraries = {
+&"": SubResource("AnimationLibrary_eow3j")
+}
+
+[connection signal="pressed" from="CanvasLayer/Menu/BoxContainer/Button" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/GameOver/BoxContainer/Button" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/NextLevel/BoxContainer/Button" to="." method="_on_next_pressed"]

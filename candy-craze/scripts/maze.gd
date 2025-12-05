@@ -16,9 +16,11 @@ const HOUSE_CLAIMED   = Vector2i(2, 0)
 
 @export_category("Generation")
 @export var allow_loops: bool = false
-@export var grid_size: int = 15
 @export var step_delay: float = 0.0
+@export var grid_size: int = 15
+@export var enemy_count: int = 4
 @export var house_count: int = 4
+@export var max_enemies: int = 6
 @export var seed: int = 0
 
 var rng := RandomNumberGenerator.new()
@@ -29,10 +31,15 @@ var adj4 = [
 	Vector2i(0, -1),
 ]
 
+var houses := []
 var walkable_tiles := []
 var dead_end_tiles := []
 var spawn_point := Vector2i()
 var goal_point := Vector2i()
+
+var astar := AStar2D.new()
+var house_scene = preload("res://nodes/house.tscn")
+var enemy_scene = preload("res://nodes/enemy.tscn")
 
 func generate_maze():
 	x_dim = grid_size
@@ -47,11 +54,13 @@ func generate_maze():
 	dfs(starting_coords)
 
 	find_dead_ends()
+	build_nav_region()
 	place_houses()
 	choose_spawn_and_goal()
 	center_maze()
+	place_enemies()
 
-	print("generation seed: ", seed)
+	print("generation seed lol: ", seed)
 
 func wipe_layer(layer: int):
 	var used = get_used_cells(layer)
@@ -80,6 +89,33 @@ func can_move_to(pos: Vector2i) -> bool:
 		pos.y >= 0 and pos.y < y_dim and
 		not is_wall(pos)
 	)
+	
+func build_nav_region():
+	var nav_region = NavigationRegion2D.new()
+	var nav_poly = NavigationPolygon.new()
+	nav_region.navigation_polygon = nav_poly
+	
+	var polys = []
+	var ts = tile_set.tile_size
+
+	# Create a rectangle polygon for each walkable tile
+	for tile in walkable_tiles:
+		var x = tile.x * ts.x
+		var y = tile.y * ts.y
+		var rect = PackedVector2Array([
+			Vector2(x, y),
+			Vector2(x + ts.x, y),
+			Vector2(x + ts.x, y + ts.y),
+			Vector2(x, y + ts.y)
+		])
+		polys.append(rect)
+
+	nav_poly.add_outline(polys[0])
+	for p in polys:
+		nav_poly.add_outline(p)
+
+	nav_poly.make_polygons_from_outlines()
+	add_child(nav_region)
 
 func dfs(start: Vector2i):
 	var stack: Array[Vector2i] = [start]
@@ -140,7 +176,23 @@ func place_houses():
 		if placed >= house_count:
 			break
 		set_cell(main_layer, tile, SOURCE_ID, HOUSE_UNCLAIMED)
+		
+		var house = house_scene.instantiate()
+		house.position = map_to_local(tile)
+		add_child(house)
+		
+		houses.append(house)
 		placed += 1
+		
+func place_enemies():
+	var count := 0
+	for house in houses:
+		if count >= max_enemies:
+			break
+		var enemy = enemy_scene.instantiate()
+		enemy.position = house.position
+		add_child(enemy)
+		count += 1
 
 func choose_spawn_and_goal():
 	var candidates = walkable_tiles.filter(
@@ -156,10 +208,6 @@ func choose_spawn_and_goal():
 
 	spawn_point = candidates[0]
 	goal_point = candidates[candidates.size() - 1]
-
-	# place markers on map (optional or for debugging)
-	#set_cell(main_layer, spawn_point, SOURCE_ID, FLOOR_ATLAS)
-	#set_cell(main_layer, goal_point, SOURCE_ID, FLOOR_ATLAS)
 
 func center_maze():
 	var tile_size = tile_set.tile_size

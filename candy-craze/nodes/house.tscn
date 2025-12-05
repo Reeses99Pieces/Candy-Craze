@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfoppsi5q1ywr"]
+
+[ext_resource type="Script" uid="uid://cy0cmtey4decm" path="res://scripts/house.gd" id="1_fgiyr"]
+[ext_resource type="Texture2D" uid="uid://cbvng2cyoojpc" path="res://icon.svg" id="2_aeavv"]
+[ext_resource type="Texture2D" uid="uid://dquqwiy48o2ll" path="res://assets/textures/light.png" id="3_aeavv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljyp5"]
+
+[node name="House" type="Area2D" groups=["Houses"]]
+script = ExtResource("1_fgiyr")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.8980392, 0.53333336, 0, 1)
+shadow_enabled = true
+shadow_filter_smooth = 10.0
+texture = ExtResource("3_aeavv")
+texture_scale = 0.3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("2_aeavv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("RectangleShape2D_ljyp5")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
